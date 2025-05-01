@@ -4,7 +4,7 @@ from component import sensor_module # Using Boost.Python bindings
 
 @given('the sensor is initialized')
 def step_impl(context):
-    context.sensor = sensor_module.G3T1_3(0, [], "sensor")
+    context.sensor = sensor_module.create_g3t1_3_instance(0, [], "sensor")
 
 @when('I call the setup function')
 def step_impl(context):
