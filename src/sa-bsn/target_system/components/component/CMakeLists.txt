@@ -85,12 +85,23 @@ ADD_DEPENDENCIES(patient_data_service messages_generate_messages_cpp)
 #    target_link_libraries(component_test ${catkin_LIBRARIES})
 #endif()
 
+# if (CATKIN_ENABLE_TESTING)
+#   find_package(rostest REQUIRED)
+#   # add_rostest_gtest(sensor_execution_test
+#   # test/features/sensor_execution.launch
+#   # test/features/sensor_execution_test.cpp)
+#   # target_link_libraries(sensor_execution_test ${catkin_LIBRARIES})
+
+#   add_executable(run_bdd_tests test/bdd-test/test.cpp)
+#   target_link_libraries(run_bdd_tests ${catkin_LIBRARIES})
+
+#   # Now use the launch file
+#   add_rostest(test/bdd-test/run_bdd_tests.launch)
+# endif()
+
 if (CATKIN_ENABLE_TESTING)
   find_package(rostest REQUIRED)
-  add_rostest_gtest(sensor_execution_test
-  test/features/sensor_execution.launch
-  test/features/sensor_execution_test.cpp)
-  target_link_libraries(sensor_execution_test ${catkin_LIBRARIES})
+  add_rostest(test/sensor_test.launch)
 endif()
 
 
