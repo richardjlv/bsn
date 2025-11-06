@@ -2,10 +2,20 @@
     <!-- <include file="$(find messages)/../configurations/environment/patient.launch"/> APPLICATION -->
   
     <include file="$(find component)/test/patient.launch" />  
+
+  
+    <include file="$(find messages)/../configurations/logging_infrastructure/logger.launch" /> <!-- LOGGING INFRASTRUCTURE -->
+
+      <include file="$(find messages)/../configurations/knowledge_repository/data_access.launch" /> <!-- KNOWLEDGE REPOSITORY -->
+
+    <include file="$(find messages)/../configurations/system_manager/strategy_manager.launch" /> <!-- MANAGER SYSTEM -->
+    <include file="$(find messages)/../configurations/system_manager/strategy_enactor.launch" /> <!-- MANAGER SYSTEM -->
+
+
     <include file="$(find messages)/../configurations/target_system/probe.launch" />  <!-- APPLICATION -->
     <include file="$(find messages)/../configurations/target_system/effector.launch" /> <!-- APPLICATION -->
+    <include file="$(find messages)/../configurations/target_system/g4t1.launch" /> <!-- APPLICATION -->
 
-    <include file="$(find messages)/../configurations/target_system/g4t1.launch" />
 
     <include file="$(find messages)/../configurations/target_system/g3t1_1.launch" /> <!-- APPLICATION -->
     <include file="$(find messages)/../configurations/target_system/g3t1_2.launch" /> <!-- APPLICATION -->
@@ -13,7 +23,6 @@
     <include file="$(find messages)/../configurations/target_system/g3t1_4.launch" /> <!-- APPLICATION -->
     <include file="$(find messages)/../configurations/target_system/g3t1_5.launch" /> <!-- APPLICATION -->
     <include file="$(find messages)/../configurations/target_system/g3t1_6.launch" /> <!-- APPLICATION -->
-  
   <param name="test_module" value="$(find component)/test"/>
   <test test-name="sensor_test" pkg="ros_pytest" type="ros_pytest_runner" />
 </launch>

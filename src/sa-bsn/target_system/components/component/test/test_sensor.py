@@ -9,6 +9,8 @@ from parsers import get_rostopic_sensor_data
 from messages.msg import SensorData
 import subprocess
 
+SENSORS = ['/g3t1_1', '/g3t1_2', '/g3t1_3', '/g3t1_4', '/g3t1_5', '/g3t1_6']
+
 class SharedSensorTests:
     """Shared test methods for sensor testing"""
 

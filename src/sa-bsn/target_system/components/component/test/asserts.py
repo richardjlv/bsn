@@ -2,6 +2,7 @@ import subprocess
 from parsers import get_rosnode_info
 import threading
 import time
+import rosnode
 
 TIMEOUT_SECONDS = 5
 
@@ -71,10 +72,13 @@ def is_node_receiving_multiple_topics(node_name, expected_topics):
         node_info = get_rosnode_info(returncode, stdout, stderr)
 
         subscriptions = [sub['topic'] for sub in node_info.get('subscriptions', [])]
+        print("subscriptions1: {}".format(subscriptions))
 
         inbound_connections = [conn['topic'] for conn in node_info.get('connections', []) if 'inbound' in conn['direction']]
+        print("inbound_connections1: {}".format(inbound_connections))
 
-        missing_topics = [topic for topic in expected_topics if topic not in subscriptions or topic not in inbound_connections]
+        missing_topics = [topic for topic in expected_topics if topic not in subscriptions and topic not in inbound_connections]
+        print("missing_topics1: {}".format(missing_topics))
 
         if not missing_topics:
             return True, []
@@ -103,18 +107,11 @@ def is_node_publishing_to_topics(node_name, expected_topics):
         node_info = get_rosnode_info(node_data.returncode, stdout, stderr)
         
         publications = [pub['topic'] for pub in node_info.get('publications', [])]
-        print("Publications:")
-        for pub in publications:
-            print(pub)
        
         outbound_connections = [conn['topic'] for conn in node_info.get('connections', []) if 'outbound' in conn['direction']]
-        print("outbound_connections:")
-        for pub in outbound_connections:
-            print(pub)
-        missing_topics = [topic for topic in expected_topics if topic not in publications or topic not in outbound_connections]
-        print("missing_topics:")
-        for pub in missing_topics:
-            print(pub)
+
+        missing_topics = [topic for topic in expected_topics if topic not in publications and topic not in outbound_connections]
+
         if not missing_topics:
             return True, []
         else:
@@ -123,7 +120,14 @@ def is_node_publishing_to_topics(node_name, expected_topics):
     except Exception as e:
         print("Error occurred while checking node {}: {}".format(node_name, str(e)))
         raise AssertionError("Timeout: Failed to check if node {} is publishing to topics {}".format(node_name, expected_topics))
-    
+
+def assert_node_is_online(node_names):
+    rosnode_list = rosnode.get_node_names()
+    if isinstance(node_names, str):
+        node_names = [node_names]
+    for node_name in node_names:
+        assert node_name in rosnode_list, "{} is not online".format(node_name)
+
 def node_is_active(node_names):
     if isinstance(node_names, str):
         node_names = [node_names]
