@@ -102,7 +102,10 @@ ADD_DEPENDENCIES(patient_data_service messages_generate_messages_cpp)
 if (CATKIN_ENABLE_TESTING)
   find_package(rostest REQUIRED)
   find_package(ros_pytest REQUIRED)
-  add_rostest(test/test_target_system.launch)
+  add_rostest(test/test_bdd/test_target_system.launch)
+  add_rostest(test/test_bdd/test_health_status.launch)
+  add_rostest(test/test_bdd/test_data_persistance.launch)
+  add_rostest(test/test_bdd/test_knowledge_repo.launch)
 
   # 1. Compila seu arquivo de teste C++ em um executável
   # add_executable(run_bdd_tests test/bdd-test/test.cpp)

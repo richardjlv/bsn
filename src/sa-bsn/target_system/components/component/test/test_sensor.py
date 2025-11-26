@@ -35,34 +35,3 @@ class SharedSensorTests:
                 raise AssertionError("Timeout: No data published on topic {}".format(sensor_topic_name))
             else:
                 raise
-
-
-
-
-
-        # try:
-            
-        #     msg = rospy.wait_for_message(sensor_topic_name, topic_class[0], timeout=5.0)
-        #     print("Temperatura (data): {}".format(msg.data))
-        #     print("Risco: {}".format(msg.risk))
-        #     print("Bateria: {}".format(msg.batt))
-        #     rospy.loginfo("Mensagem recebida com sucesso do no C++!")
-        
-        # except rospy.ROSException as e:
-        #     pytest.fail("Falha ao receber mensagem do topico %s. O no C++ nao esta publicando ou o topico esta errado. Error: %s" % (sensor_topic_name, str(e)))
-        # data_received = []
-        
-        # def callback(data):
-        #     data_received.append(data)
-        
-        # subscriber = rospy.Subscriber(sensor_topic_name, SensorData, callback)
-        
-        # start_time = time.time()
-        # while time.time() - start_time < timeout:
-        #     if data_received:
-        #         subscriber.unregister()
-        #         return
-        #     rospy.sleep(0.1)
-        
-        # subscriber.unregister()
-        # assert False, "No data published on topic {} within {} seconds".format(sensor_topic_name, timeout)

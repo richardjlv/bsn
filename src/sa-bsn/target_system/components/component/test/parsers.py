@@ -102,8 +102,6 @@ def get_rosnode_info(returncode, stdout, stderr):
     # Decode the output from bytes to string
     output = stdout.decode('utf-8')
     lines = output.splitlines()
-    for line in lines:
-        print("LINE: {}".format(line))
     if lines and lines[-1].startswith("cannot contact"):
         return "unreachable"
     # Initialize dictionaries for storing parsed data
@@ -264,11 +262,14 @@ def process_real_time_topics(context, capture_topic_data, topics):
             try:
                 topic, parsed_data, is_high_risk, risk_key = future.result()
                 if topic == '/TargetSystemData':
-                    context.target_system_data = parsed_data
+                    context['target_system_data'] = parsed_data
                 elif topic in NON_SENSOR_TOPICS:
-                    context.non_sensor[topic] = parsed_data
+                    print('Non sensor topic data captured for {}: {}'.format(topic, parsed_data))
+                    print(topic)
+                    print(parsed_data)
+                    context['non_sensor'][topic] = parsed_data
                 else:
-                    context.sensor_data[topic] = parsed_data
+                    context['sensor_data'][topic] = parsed_data
 
             except Exception as e:
                 print("Error processing topic for row {0}: {1}".format(row, e))

@@ -72,13 +72,10 @@ def is_node_receiving_multiple_topics(node_name, expected_topics):
         node_info = get_rosnode_info(returncode, stdout, stderr)
 
         subscriptions = [sub['topic'] for sub in node_info.get('subscriptions', [])]
-        print("subscriptions1: {}".format(subscriptions))
 
         inbound_connections = [conn['topic'] for conn in node_info.get('connections', []) if 'inbound' in conn['direction']]
-        print("inbound_connections1: {}".format(inbound_connections))
 
         missing_topics = [topic for topic in expected_topics if topic not in subscriptions and topic not in inbound_connections]
-        print("missing_topics1: {}".format(missing_topics))
 
         if not missing_topics:
             return True, []
@@ -121,12 +118,9 @@ def is_node_publishing_to_topics(node_name, expected_topics):
         print("Error occurred while checking node {}: {}".format(node_name, str(e)))
         raise AssertionError("Timeout: Failed to check if node {} is publishing to topics {}".format(node_name, expected_topics))
 
-def assert_node_is_online(node_names):
+def assert_node_is_online(node_name):
     rosnode_list = rosnode.get_node_names()
-    if isinstance(node_names, str):
-        node_names = [node_names]
-    for node_name in node_names:
-        assert node_name in rosnode_list, "{} is not online".format(node_name)
+    assert node_name in rosnode_list, "{} is not online".format(node_name)
 
 def node_is_active(node_names):
     if isinstance(node_names, str):
@@ -135,7 +129,6 @@ def node_is_active(node_names):
     result = subprocess.Popen(['rosnode', 'list'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = result.communicate()
     node_list = stdout.decode('utf-8').splitlines()
-    print("node list: {}".format(node_list))
     for node_name in node_names:
         assert node_name in node_list, "{} is not online. Make sure give the system more time to start up.".format(node_name)
 
@@ -154,7 +147,6 @@ def bool_node_is_active(node_names):
 
 def check_time_performance(sensor_data, target_system_data, key, value, evaluate):
     time_threshold=250000
-
     # Iterate over both lists and check for matching values and time condition
     for i, sensor_risk in enumerate(sensor_data[key][evaluate]):
         for j, target_risk in enumerate(target_system_data[value]):
@@ -168,6 +160,7 @@ def check_time_performance(sensor_data, target_system_data, key, value, evaluate
                 #rounded_sensor_time = round(sensor_time, -5) / 1e6
                 #rounded_target_time = round(target_time, -5) / 1e6
                 time_diff = sensor_time - target_time
+                print("diff: {}".format(time_diff))
                 if time_diff < time_threshold:
                     return False
                 print('TIME DIFFERENCE in {}: {} us'.format(key, time_diff))
