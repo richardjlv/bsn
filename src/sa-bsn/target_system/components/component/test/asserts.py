@@ -76,6 +76,8 @@ def is_node_receiving_multiple_topics(node_name, expected_topics):
         inbound_connections = [conn['topic'] for conn in node_info.get('connections', []) if 'inbound' in conn['direction']]
 
         missing_topics = [topic for topic in expected_topics if topic not in subscriptions and topic not in inbound_connections]
+        print('node {}, inbound_connections {} subscriptions: {}'.format(node_name, inbound_connections, subscriptions))
+        print('missing_topics: {}'.format(missing_topics))
 
         if not missing_topics:
             return True, []
@@ -108,8 +110,10 @@ def is_node_publishing_to_topics(node_name, expected_topics):
         outbound_connections = [conn['topic'] for conn in node_info.get('connections', []) if 'outbound' in conn['direction']]
 
         missing_topics = [topic for topic in expected_topics if topic not in publications and topic not in outbound_connections]
-
+        print('node {}, outbound_connections {} publications: {}'.format(node_name, outbound_connections, publications))
+        print('missing_topics: {}'.format(missing_topics))
         if not missing_topics:
+            print('node {} is publishing to all expected topics.'.format(node_name))
             return True, []
         else:
             return False, missing_topics

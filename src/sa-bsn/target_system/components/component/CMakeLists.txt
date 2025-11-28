@@ -106,6 +106,10 @@ if (CATKIN_ENABLE_TESTING)
   add_rostest(test/test_bdd/test_health_status.launch)
   add_rostest(test/test_bdd/test_data_persistance.launch)
   add_rostest(test/test_bdd/test_knowledge_repo.launch)
+  add_rostest(test/test_bdd/test_managing_system.launch)
+  # not working yet
+  # add_rostest(test/test_bdd/test_check_bsn.launch)
+  # add_rostest(test/test_sensor.launch)
 
   # 1. Compila seu arquivo de teste C++ em um executável
   # add_executable(run_bdd_tests test/bdd-test/test.cpp)

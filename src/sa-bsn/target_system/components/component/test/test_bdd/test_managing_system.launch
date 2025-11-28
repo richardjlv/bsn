@@ -2,7 +2,6 @@
     <!-- <include file="$(find messages)/../configurations/environment/patient.launch"/> APPLICATION -->
   
     <include file="$(find component)/test/patient.launch" />  
-    <include file="$(find messages)/../configurations/simulation/injector.launch" /> <!-- FAULT INJECTION -->
   
     <include file="$(find messages)/../configurations/logging_infrastructure/test_logger.launch" /> <!-- LOGGING INFRASTRUCTURE -->
 
@@ -21,6 +20,7 @@
     <include file="$(find messages)/../configurations/target_system/test_g3t1_4.launch" /> <!-- APPLICATION -->
     <include file="$(find messages)/../configurations/target_system/test_g3t1_5.launch" /> <!-- APPLICATION -->
     <include file="$(find messages)/../configurations/target_system/test_g3t1_6.launch" /> <!-- APPLICATION -->
-  <param name="test_module" value="$(find component)/test/test_bdd/test_target_system.py"/>
-  <test test-name="sensor_test" pkg="ros_pytest" type="ros_pytest_runner" />
+    <include file="$(find messages)/../configurations/simulation/injector.launch" /> <!-- FAULT INJECTION -->
+  <param name="test_module" value="$(find component)/test/test_bdd/test_managing_system.py"/>
+  <test test-name="test_managing_system" pkg="ros_pytest" type="ros_pytest_runner" />
 </launch>
