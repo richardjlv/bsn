@@ -77,20 +77,22 @@ target_link_libraries(patient_data_service
 ADD_DEPENDENCIES(patient_data_service messages_generate_messages_cpp)
 
 # Adicionar flags de cobertura SOMENTE se estivermos em modo Debug
-if(CMAKE_BUILD_TYPE MATCHES Debug)
-    message(STATUS "Build de Debug detectado: Habilitando Cobertura de Código (GCOV)")
-    
-    # -O0: Desativa otimizações (essencial para que a linha do código bata com a execução)
-    # -fprofile-arcs: Instrumenta o código para contar execuções
-    # -ftest-coverage: Gera dados para o GCOV
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage -O0")
-    
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fprofile-arcs -ftest-coverage")
-endif()
+# if(CMAKE_BUILD_TYPE MATCHES Debug)
+    # message(STATUS "Build de Debug detectado: Habilitando Cobertura de Código (GCOV)")
+
+    # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage -O0 -fno-inline")
+    # set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fprofile-arcs -ftest-coverage")
+
+    # endif()
+
+message(STATUS "Build com Clang: Habilitando Source-based Coverage")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-instr-generate -fcoverage-mapping -O0 -fno-inline")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fprofile-instr-generate -fcoverage-mapping")
 
 if (CATKIN_ENABLE_TESTING)
   find_package(rostest REQUIRED)
   find_package(ros_pytest REQUIRED)
+
   add_rostest(test/test_bdd/test_target_system.launch)
   add_rostest(test/test_bdd/test_health_status.launch)
   add_rostest(test/test_bdd/test_data_persistance.launch)
@@ -115,6 +117,7 @@ if (CATKIN_ENABLE_TESTING)
   add_rostest(test/unit/test_G3T1_6_connected.launch)
   
   add_rostest(test/unit/test_G4T1.launch)
+
 endif()
 
 
