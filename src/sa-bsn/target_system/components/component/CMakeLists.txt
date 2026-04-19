@@ -76,20 +76,15 @@ target_link_libraries(patient_data_service
 )
 ADD_DEPENDENCIES(patient_data_service messages_generate_messages_cpp)
 
-# Adicionar flags de cobertura SOMENTE se estivermos em modo Debug
-# if(CMAKE_BUILD_TYPE MATCHES Debug)
-    # message(STATUS "Build de Debug detectado: Habilitando Cobertura de Código (GCOV)")
-
-    # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage -O0 -fno-inline")
-    # set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fprofile-arcs -ftest-coverage")
-
-    # endif()
-
-message(STATUS "Build com Clang: Habilitando Source-based Coverage")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-instr-generate -fcoverage-mapping -O0 -fno-inline")
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fprofile-instr-generate -fcoverage-mapping")
-
 if (CATKIN_ENABLE_TESTING)
+  if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    message(STATUS "Test build com Clang: habilitando Source-based Coverage")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-instr-generate -fcoverage-mapping -O0 -fno-inline")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fprofile-instr-generate -fcoverage-mapping")
+  else()
+    message(STATUS "Coverage LLVM desabilitado: compilador nao eh Clang")
+  endif()
+
   find_package(rostest REQUIRED)
   find_package(ros_pytest REQUIRED)
 
@@ -117,6 +112,7 @@ if (CATKIN_ENABLE_TESTING)
   add_rostest(test/unit/test_G3T1_6_connected.launch)
   
   add_rostest(test/unit/test_G4T1.launch)
+  add_rostest(test/unit/test_sensor_core.launch)
 
 endif()
 
