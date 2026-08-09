@@ -10,6 +10,10 @@ FULL_SYSTEM = ['/collector', '/param_adapter',
                '/g3t1_4', '/g3t1_5', '/g3t1_6', 
                '/g4t1']
 
+SYSTEM_MAP = {
+    'BodyHub': '/g4t1'
+}
+
 @pytest.fixture(scope='module')
 def context():
     """
