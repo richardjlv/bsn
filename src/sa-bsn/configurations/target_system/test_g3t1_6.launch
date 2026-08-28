@@ -1,6 +1,6 @@
 <launch> 
-    <!-- Temperature Measurement Sensor -->
-    <node name="g3t1_3" pkg="component" type="g3t1_3" output="log" />
+    <!-- Glucose Measurement Sensor -->
+    <node name="g3t1_6" pkg="component" type="g3t1_6" output="log" />
 
     <param name="start" value="true" />
 
@@ -19,6 +19,6 @@
     <param name="instant_recharge" value="true" type="bool" />
 
     <!-- real world parameter-->
-    <param name="connect_sensor" value="true" type="bool" />
+    <param name="connect_sensor" value="false" type="bool" />
 
 </launch>

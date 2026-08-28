@@ -1,5 +1,5 @@
 <launch> 
-    <!-- Blood Oxigenation Measurement Sensor -->    
+    <!-- Blood Oxigenation Measurement Sensor (connected test profile) -->    
     <node name="g3t1_1" pkg="component" type="g3t1_1" output="log" />
 
     <param name="start" value="true" />
@@ -11,12 +11,12 @@
     <param name="midrisk" value="21,65" />
     <param name="highrisk" value="66,100" />
 
-    <!-- Risk values for oximeter -->
-    <param name="HighRisk0" value="-1,-1" />
-    <param name="MidRisk0" value="-1,-1" />
-    <param name="LowRisk" value="65,100" />
-    <param name="MidRisk1" value="55,65" />
-    <param name="HighRisk1" value="0,55" />
+    <!-- Risk values tuned to exercise unknown label path in connected tests -->
+    <param name="oxigenation_HighRisk0" value="0,39" />
+    <param name="oxigenation_MidRisk0" value="40,64" />
+    <param name="oxigenation_LowRisk" value="90,90" />
+    <param name="oxigenation_MidRisk1" value="91,95" />
+    <param name="oxigenation_HighRisk1" value="96,100" />
 
     <!-- accuracy in percentage -->
     <param name="accuracy" value="99" type="double" />
